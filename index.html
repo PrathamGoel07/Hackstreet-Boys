@@ -1,0 +1,1546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeployHub - Complete Web Deployment Platform</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #10b981;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-700: #374151;
+            --gray-900: #111827;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9fafb;
+            color: var(--gray-900);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background-color: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+        }
+        
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background-color: var(--primary);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--gray-700);
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 3rem;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary);
+        }
+        
+        .btn-secondary:hover {
+            background-color: #0da271;
+        }
+        
+        .btn-danger {
+            background-color: var(--danger);
+        }
+        
+        .btn-danger:hover {
+            background-color: #dc2626;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+        
+        .feature-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background-color: var(--gray-100);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+        }
+        
+        .dashboard {
+            background-color: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: 4rem;
+        }
+        
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .dashboard h2 {
+            font-size: 1.5rem;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid var(--gray-200);
+            margin-bottom: 2rem;
+        }
+        
+        .tab {
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+        }
+        
+        .tab.active {
+            border-bottom: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .deployment-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .deployment-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            background-color: var(--gray-100);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary);
+        }
+        
+        .deployment-info h4 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .deployment-meta {
+            display: flex;
+            gap: 1rem;
+            color: var(--gray-700);
+            font-size: 0.875rem;
+        }
+        
+        .status {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .status-success {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+        
+        .status-warning {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+        
+        .status-danger {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .status-info {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
+        
+        .status-pending {
+            background-color: #f3f4f6;
+            color: #6b7280;
+        }
+        
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .metric-card {
+            background-color: var(--gray-100);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .metric-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .metric-label {
+            color: var(--gray-700);
+            font-size: 0.875rem;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background-color: var(--gray-200);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+        
+        .progress {
+            height: 100%;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+        
+        .progress-warning {
+            background-color: var(--warning);
+        }
+        
+        .progress-danger {
+            background-color: var(--danger);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--gray-300);
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        
+        .alert {
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .alert-success {
+            background-color: #d1fae5;
+            color: #065f46;
+            border-left: 4px solid #10b981;
+        }
+        
+        .alert-warning {
+            background-color: #fef3c7;
+            color: #92400e;
+            border-left: 4px solid #f59e0b;
+        }
+        
+        .alert-danger {
+            background-color: #fee2e2;
+            color: #991b1b;
+            border-left: 4px solid #ef4444;
+        }
+        
+        .alert-info {
+            background-color: #dbeafe;
+            color: #1e40af;
+            border-left: 4px solid #3b82f6;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: var(--gray-700);
+            border-top: 1px solid var(--gray-200);
+        }
+        
+        .logs {
+            background-color: #1f2937;
+            color: #d1d5db;
+            padding: 1rem;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875rem;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+        }
+        
+        .log-entry {
+            margin-bottom: 0.5rem;
+        }
+        
+        .log-time {
+            color: #6b7280;
+        }
+        
+        .log-info {
+            color: #60a5fa;
+        }
+        
+        .log-success {
+            color: #34d399;
+        }
+        
+        .log-warning {
+            color: #fbbf24;
+        }
+        
+        .log-error {
+            color: #f87171;
+        }
+        
+        .health-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+        
+        .health-good {
+            background-color: var(--secondary);
+        }
+        
+        .health-warning {
+            background-color: var(--warning);
+        }
+        
+        .health-critical {
+            background-color: var(--danger);
+        }
+        
+        .rollback-section {
+            background-color: #fef3c7;
+            border: 1px solid #f59e0b;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .rollback-section h3 {
+            color: #92400e;
+            margin-bottom: 1rem;
+        }
+        
+        .rollback-reason {
+            margin-bottom: 1rem;
+            color: #92400e;
+        }
+        
+        .comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .comparison-item {
+            background-color: white;
+            border-radius: 6px;
+            padding: 1rem;
+        }
+        
+        .comparison-item h4 {
+            margin-bottom: 0.5rem;
+            font-size: 0.875rem;
+            color: var(--gray-700);
+        }
+        
+        .comparison-bad {
+            color: var(--danger);
+        }
+        
+        .comparison-good {
+            color: var(--secondary);
+        }
+        
+        .repo-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--gray-200);
+        }
+        
+        .repo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        
+        .repo-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .repo-description {
+            color: var(--gray-700);
+            margin-bottom: 1rem;
+        }
+        
+        .repo-meta {
+            display: flex;
+            gap: 1rem;
+            color: var(--gray-700);
+            font-size: 0.875rem;
+        }
+        
+        .repo-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            padding: 2rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .modal-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray-700);
+        }
+        
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .service-card {
+            background-color: white;
+            border-radius: 6px;
+            padding: 1rem;
+            text-align: center;
+            border: 1px solid var(--gray-200);
+        }
+        
+        .service-card.rolling-back {
+            border-color: var(--warning);
+            background-color: #fef3c7;
+        }
+        
+        .service-card.rolled-back {
+            border-color: var(--secondary);
+            background-color: #d1fae5;
+        }
+        
+        .preview-url {
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        .preview-url:hover {
+            text-decoration: underline;
+        }
+        
+        .branch-selector {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .branch-btn {
+            padding: 0.5rem 1rem;
+            background-color: var(--gray-100);
+            border: 1px solid var(--gray-300);
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.875rem;
+        }
+        
+        .branch-btn.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .cpu-monitor {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background-color: var(--gray-100);
+            border-radius: 8px;
+        }
+        
+        .cpu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .cpu-chart {
+            height: 120px;
+            background-color: white;
+            border-radius: 6px;
+            padding: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cpu-bars {
+            display: flex;
+            align-items: flex-end;
+            height: 100%;
+            gap: 2px;
+        }
+        
+        .cpu-bar {
+            flex: 1;
+            background-color: var(--primary);
+            border-radius: 2px 2px 0 0;
+            transition: height 0.5s ease;
+        }
+        
+        .cpu-bar.warning {
+            background-color: var(--warning);
+        }
+        
+        .cpu-bar.danger {
+            background-color: var(--danger);
+        }
+        
+        .cpu-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            color: var(--gray-700);
+        }
+        
+        .cpu-threshold {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background-color: var(--warning);
+            opacity: 0.7;
+        }
+        
+        .cpu-threshold.warning {
+            top: 40%;
+        }
+        
+        .cpu-threshold.danger {
+            top: 70%;
+            background-color: var(--danger);
+        }
+        
+        .auto-scaling-info {
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: white;
+            border-radius: 6px;
+            border-left: 4px solid var(--secondary);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo">
+                    <div class="logo-icon">D</div>
+                    DeployHub
+                </div>
+                <div class="nav-links">
+                    <a href="#dashboard">Dashboard</a>
+                    <a href="#deployments">Deployments</a>
+                    <a href="#metrics">Metrics</a>
+                    <a href="#settings">Settings</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Advanced Web Deployment Platform</h1>
+            <p>Automate your deployment workflow with preview deployments, auto-scaling, health checks, and intelligent rollback systems.</p>
+            <button class="btn" id="connectGithubBtn"><i class="fab fa-github"></i> Connect GitHub</button>
+        </div>
+    </section>
+
+    <div class="container">
+        <section class="features">
+            <div class="feature-card">
+                <div class="feature-icon">🚀</div>
+                <h3>Preview Deployments</h3>
+                <p>Automatically create temporary preview URLs for every pull request. Team members can test changes before merging.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>One-Click Deployment</h3>
+                <p>Deploy directly from your Git repository with a single click. We handle building, configuration, and deployment.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📈</div>
+                <h3>Auto-Scaling & Health Checks</h3>
+                <p>Automatically scale based on traffic and CPU usage. Health checks ensure your application stays available.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔄</div>
+                <h3>Intelligent Rollback</h3>
+                <p>Advanced system compares deployments, runs tests, monitors metrics, and performs synchronized rollbacks when needed.</p>
+            </div>
+        </section>
+
+        <section class="dashboard" id="dashboard">
+            <div class="dashboard-header">
+                <h2>Project Dashboard</h2>
+                <button class="btn" id="deployBtn">Deploy Now</button>
+            </div>
+
+            <div class="tabs">
+                <div class="tab active" data-tab="repositories">Repositories</div>
+                <div class="tab" data-tab="deployments">Deployments</div>
+                <div class="tab" data-tab="metrics">Metrics</div>
+                <div class="tab" data-tab="settings">Settings</div>
+            </div>
+
+            <div class="tab-content active" id="repositories-tab">
+                <div class="alert alert-info">
+                    <strong>Connect your GitHub account</strong> to start deploying your repositories.
+                </div>
+
+                <div id="repositoriesList">
+                    <!-- Repositories will be loaded here -->
+                </div>
+            </div>
+
+            <div class="tab-content" id="deployments-tab">
+                <div class="alert alert-success">
+                    <strong>Latest deployment successful!</strong> Your application is running at <a href="#" class="preview-url">https://myapp-abc123.deployhub.app</a>
+                </div>
+
+                <div class="rollback-section" id="rollbackAlert" style="display: none;">
+                    <h3>⚠️ Automatic Rollback Initiated</h3>
+                    <p class="rollback-reason">The system detected a 35% increase in error rates, 150ms latency increase, and high CPU usage after the latest deployment.</p>
+                    
+                    <div class="comparison">
+                        <div class="comparison-item">
+                            <h4>Previous Version</h4>
+                            <div class="comparison-good">Error Rate: 1.2%</div>
+                            <div class="comparison-good">Latency: 120ms</div>
+                            <div class="comparison-good">CPU: 32%</div>
+                            <div class="comparison-good">Memory: 45%</div>
+                        </div>
+                        <div class="comparison-item">
+                            <h4>Current Version</h4>
+                            <div class="comparison-bad">Error Rate: 36.2%</div>
+                            <div class="comparison-bad">Latency: 270ms</div>
+                            <div class="comparison-bad">CPU: 89%</div>
+                            <div class="comparison-bad">Memory: 78%</div>
+                        </div>
+                    </div>
+                    
+                    <p><strong>Root Cause:</strong> Database connection pool configuration mismatch causing high CPU usage.</p>
+                    <button class="btn btn-danger" id="confirmRollback">Confirm Rollback</button>
+                    <button class="btn" id="dismissRollback">Dismiss</button>
+                </div>
+
+                <h3>Recent Deployments</h3>
+                <div class="deployment-list" id="deploymentsList">
+                    <!-- Deployments will be loaded here -->
+                </div>
+
+                <h3 style="margin-top: 2rem;">Deployment Logs</h3>
+                <div class="logs" id="deploymentLogs">
+                    <div class="log-entry"><span class="log-time">[12:05:32]</span> <span class="log-info">INFO:</span> Select a repository and deploy to see logs</div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="metrics-tab">
+                <h3>Application Metrics</h3>
+                <div class="metrics">
+                    <div class="metric-card">
+                        <div class="metric-value" id="cpuValue">32%</div>
+                        <div class="metric-label">CPU Usage</div>
+                        <div class="progress-bar">
+                            <div class="progress" id="cpuBar" style="width: 32%"></div>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="memoryValue">45%</div>
+                        <div class="metric-label">Memory Usage</div>
+                        <div class="progress-bar">
+                            <div class="progress" id="memoryBar" style="width: 45%"></div>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="latencyValue">120ms</div>
+                        <div class="metric-label">Avg. Response Time</div>
+                        <div class="progress-bar">
+                            <div class="progress" id="latencyBar" style="width: 24%"></div>
+                        </div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-value" id="errorRateValue">1.2%</div>
+                        <div class="metric-label">Error Rate</div>
+                        <div class="progress-bar">
+                            <div class="progress" id="errorRateBar" style="width: 12%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CPU Usage Monitor -->
+                <div class="cpu-monitor">
+                    <div class="cpu-header">
+                        <h3>CPU Usage Monitor</h3>
+                        <div class="status status-success" id="cpuStatus">Normal</div>
+                    </div>
+                    <div class="cpu-chart">
+                        <div class="cpu-threshold warning"></div>
+                        <div class="cpu-threshold danger"></div>
+                        <div class="cpu-bars" id="cpuBars">
+                            <!-- CPU bars will be generated here -->
+                        </div>
+                        <div class="cpu-labels">
+                            <span>5m ago</span>
+                            <span>4m ago</span>
+                            <span>3m ago</span>
+                            <span>2m ago</span>
+                            <span>1m ago</span>
+                            <span>Now</span>
+                        </div>
+                    </div>
+                    <div class="auto-scaling-info">
+                        <h4><i class="fas fa-expand-arrows-alt"></i> Auto-Scaling Status</h4>
+                        <p>Current instances: <strong id="instanceCount">4</strong> | Max instances: 10 | Scaling based on CPU usage (>70%)</p>
+                        <div class="progress-bar">
+                            <div class="progress" id="scalingProgress" style="width: 40%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 style="margin-top: 2rem;">Service Health</h3>
+                <div class="service-grid">
+                    <div class="service-card">
+                        <h4><span class="health-indicator health-good"></span> Web Server</h4>
+                        <div class="status status-success">Healthy</div>
+                        <div class="deployment-meta">
+                            <span>CPU: 45%</span>
+                            <span>Memory: 62%</span>
+                            <span>Containers: <span id="webContainers">4</span></span>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <h4><span class="health-indicator health-good"></span> API Gateway</h4>
+                        <div class="status status-success">Healthy</div>
+                        <div class="deployment-meta">
+                            <span>CPU: 28%</span>
+                            <span>Memory: 45%</span>
+                            <span>Containers: 2</span>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <h4><span class="health-indicator health-warning"></span> Database</h4>
+                        <div class="status status-warning">High Load</div>
+                        <div class="deployment-meta">
+                            <span>CPU: 67%</span>
+                            <span>Memory: 78%</span>
+                            <span>Connections: 142</span>
+                        </div>
+                    </div>
+                    <div class="service-card">
+                        <h4><span class="health-indicator health-good"></span> Cache Service</h4>
+                        <div class="status status-success">Healthy</div>
+                        <div class="deployment-meta">
+                            <span>CPU: 32%</span>
+                            <span>Memory: 45%</span>
+                            <span>Hit Rate: 82%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tab-content" id="settings-tab">
+                <h3>Project Settings</h3>
+                <div class="form-group">
+                    <label for="repoUrl">Git Repository URL</label>
+                    <input type="text" id="repoUrl" class="form-control" value="https://github.com/username/my-app">
+                </div>
+                <div class="form-group">
+                    <label for="branch">Default Branch</label>
+                    <input type="text" id="branch" class="form-control" value="main">
+                </div>
+                <div class="form-group">
+                    <label for="buildCommand">Build Command</label>
+                    <input type="text" id="buildCommand" class="form-control" value="npm run build">
+                </div>
+                <div class="form-group">
+                    <label for="startCommand">Start Command</label>
+                    <input type="text" id="startCommand" class="form-control" value="npm start">
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="autoDeploy" checked> 
+                        Auto-deploy on push to main branch
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="previewDeployments" checked> 
+                        Create preview deployments for pull requests
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="autoRollback" checked> 
+                        Enable automatic rollback on deployment issues
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label for="cpuThreshold">CPU Threshold for Auto-scaling</label>
+                    <input type="range" id="cpuThreshold" class="form-control" min="50" max="90" value="70">
+                    <div id="thresholdValue">70%</div>
+                </div>
+                <button class="btn">Save Settings</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- GitHub Connection Modal -->
+    <div class="modal" id="githubModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Connect GitHub Account</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="form-group">
+                <label for="githubToken">GitHub Personal Access Token</label>
+                <input type="password" id="githubToken" class="form-control" placeholder="Enter your GitHub token">
+                <small>We need this to access your repositories. We don't store your token.</small>
+            </div>
+            <div class="form-group">
+                <label for="githubUsername">GitHub Username</label>
+                <input type="text" id="githubUsername" class="form-control" placeholder="Enter your GitHub username">
+            </div>
+            <button class="btn" id="connectBtn">Connect</button>
+        </div>
+    </div>
+
+    <!-- Deploy Modal -->
+    <div class="modal" id="deployModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Deploy Repository</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div id="deployRepoInfo">
+                <!-- Repository info will be loaded here -->
+            </div>
+            <div class="form-group">
+                <label for="deployBranch">Branch to deploy</label>
+                <select id="deployBranch" class="form-control">
+                    <option value="main">main</option>
+                    <option value="develop">develop</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="deployEnvironment">Environment</label>
+                <select id="deployEnvironment" class="form-control">
+                    <option value="production">Production</option>
+                    <option value="staging">Staging</option>
+                </select>
+            </div>
+            <button class="btn" id="startDeployBtn">Start Deployment</button>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>DeployHub - Advanced Web Deployment Platform for Hackathon</p>
+        </div>
+    </footer>
+
+    <script>
+        // Sample repository data
+        const sampleRepositories = [
+            {
+                id: 1,
+                name: "my-react-app",
+                fullName: "username/my-react-app",
+                description: "A React application with modern tooling",
+                private: false,
+                stars: 12,
+                forks: 3,
+                language: "JavaScript",
+                defaultBranch: "main",
+                branches: ["main", "develop", "feature/new-ui"],
+                lastUpdated: "2023-06-15T10:30:00Z"
+            },
+            {
+                id: 2,
+                name: "node-api",
+                fullName: "username/node-api",
+                description: "REST API built with Node.js and Express",
+                private: false,
+                stars: 8,
+                forks: 2,
+                language: "JavaScript",
+                defaultBranch: "main",
+                branches: ["main", "develop"],
+                lastUpdated: "2023-06-10T14:22:00Z"
+            },
+            {
+                id: 3,
+                name: "portfolio-site",
+                fullName: "username/portfolio-site",
+                description: "Personal portfolio website",
+                private: false,
+                stars: 5,
+                forks: 1,
+                language: "HTML",
+                defaultBranch: "main",
+                branches: ["main", "gh-pages"],
+                lastUpdated: "2023-05-28T09:15:00Z"
+            }
+        ];
+
+        // Sample deployments data
+        const sampleDeployments = [
+            {
+                id: 42,
+                repo: "my-react-app",
+                branch: "main",
+                commit: "a1b2c3d",
+                status: "success",
+                environment: "production",
+                url: "https://myapp-abc123.deployhub.app",
+                createdAt: "2023-06-15T12:05:00Z",
+                duration: 120
+            },
+            {
+                id: 41,
+                repo: "my-react-app",
+                branch: "feature/new-ui",
+                commit: "e4f5g6h",
+                status: "success",
+                environment: "preview",
+                url: "https://pr-124-myapp-xyz789.deployhub.app",
+                createdAt: "2023-06-15T10:30:00Z",
+                duration: 95
+            },
+            {
+                id: 40,
+                repo: "node-api",
+                branch: "main",
+                commit: "i7j8k9l",
+                status: "success",
+                environment: "production",
+                url: "https://api-abc456.deployhub.app",
+                createdAt: "2023-06-14T16:45:00Z",
+                duration: 85
+            }
+        ];
+
+        // CPU usage data for the chart
+        let cpuUsageData = [32, 35, 38, 42, 45, 48];
+        let instanceCount = 4;
+        let isAutoScaling = false;
+
+        // DOM Elements
+        const githubModal = document.getElementById('githubModal');
+        const deployModal = document.getElementById('deployModal');
+        const repositoriesList = document.getElementById('repositoriesList');
+        const deploymentsList = document.getElementById('deploymentsList');
+        const deployRepoInfo = document.getElementById('deployRepoInfo');
+        const cpuBars = document.getElementById('cpuBars');
+        const cpuValue = document.getElementById('cpuValue');
+        const cpuBar = document.getElementById('cpuBar');
+        const cpuStatus = document.getElementById('cpuStatus');
+        const instanceCountElement = document.getElementById('instanceCount');
+        const webContainers = document.getElementById('webContainers');
+        const scalingProgress = document.getElementById('scalingProgress');
+        const cpuThreshold = document.getElementById('cpuThreshold');
+        const thresholdValue = document.getElementById('thresholdValue');
+        let currentRepo = null;
+
+        // Initialize CPU chart
+        function initializeCpuChart() {
+            cpuBars.innerHTML = '';
+            cpuUsageData.forEach(usage => {
+                const bar = document.createElement('div');
+                bar.className = 'cpu-bar';
+                bar.style.height = `${usage}%`;
+                
+                if (usage > 70) {
+                    bar.classList.add('danger');
+                } else if (usage > 40) {
+                    bar.classList.add('warning');
+                }
+                
+                cpuBars.appendChild(bar);
+            });
+            updateCpuDisplay();
+        }
+
+        // Update CPU display
+        function updateCpuDisplay() {
+            const currentCpu = cpuUsageData[cpuUsageData.length - 1];
+            cpuValue.textContent = `${currentCpu}%`;
+            cpuBar.style.width = `${currentCpu}%`;
+            
+            // Update progress bar color based on CPU usage
+            if (currentCpu > 70) {
+                cpuBar.className = 'progress progress-danger';
+                cpuStatus.textContent = 'High';
+                cpuStatus.className = 'status status-danger';
+                
+                // Trigger auto-scaling if not already scaling
+                if (!isAutoScaling && currentCpu > parseInt(cpuThreshold.value)) {
+                    triggerAutoScaling();
+                }
+            } else if (currentCpu > 40) {
+                cpuBar.className = 'progress progress-warning';
+                cpuStatus.textContent = 'Moderate';
+                cpuStatus.className = 'status status-warning';
+            } else {
+                cpuBar.className = 'progress';
+                cpuStatus.textContent = 'Normal';
+                cpuStatus.className = 'status status-success';
+            }
+        }
+
+        // Simulate CPU usage changes
+        function simulateCpuUsage() {
+            // Remove first element and add new random value
+            cpuUsageData.shift();
+            
+            // Generate new CPU value with some randomness
+            let newCpu = cpuUsageData[cpuUsageData.length - 1] + (Math.random() * 6 - 3);
+            newCpu = Math.max(10, Math.min(95, newCpu)); // Keep between 10% and 95%
+            
+            cpuUsageData.push(Math.round(newCpu));
+            
+            // Update chart
+            initializeCpuChart();
+        }
+
+        // Trigger auto-scaling
+        function triggerAutoScaling() {
+            isAutoScaling = true;
+            const currentCpu = cpuUsageData[cpuUsageData.length - 1];
+            
+            if (currentCpu > parseInt(cpuThreshold.value) && instanceCount < 10) {
+                instanceCount++;
+                instanceCountElement.textContent = instanceCount;
+                webContainers.textContent = instanceCount;
+                scalingProgress.style.width = `${instanceCount * 10}%`;
+                
+                // Add log entry
+                const logs = document.getElementById('deploymentLogs');
+                const logEntry = document.createElement('div');
+                logEntry.className = 'log-entry';
+                
+                const timeSpan = document.createElement('span');
+                timeSpan.className = 'log-time';
+                timeSpan.textContent = `[${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}]`;
+                
+                const typeSpan = document.createElement('span');
+                typeSpan.className = 'log-info';
+                typeSpan.textContent = 'AUTO-SCALING:';
+                
+                const textSpan = document.createElement('span');
+                textSpan.textContent = ` Scaled up to ${instanceCount} instances due to high CPU usage (${currentCpu}%)`;
+                
+                logEntry.appendChild(timeSpan);
+                logEntry.appendChild(typeSpan);
+                logEntry.appendChild(textSpan);
+                
+                logs.appendChild(logEntry);
+                logs.scrollTop = logs.scrollHeight;
+            }
+            
+            // Reset scaling after some time
+            setTimeout(() => {
+                isAutoScaling = false;
+            }, 30000);
+        }
+
+        // Tab functionality
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', () => {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                tab.classList.add('active');
+                const tabId = tab.getAttribute('data-tab');
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+            });
+        });
+
+        // Modal functionality
+        document.getElementById('connectGithubBtn').addEventListener('click', () => {
+            githubModal.style.display = 'flex';
+        });
+
+        document.querySelectorAll('.close-modal').forEach(btn => {
+            btn.addEventListener('click', () => {
+                githubModal.style.display = 'none';
+                deployModal.style.display = 'none';
+            });
+        });
+
+        // CPU threshold slider
+        cpuThreshold.addEventListener('input', () => {
+            thresholdValue.textContent = `${cpuThreshold.value}%`;
+        });
+
+        // Connect GitHub
+        document.getElementById('connectBtn').addEventListener('click', () => {
+            const token = document.getElementById('githubToken').value;
+            const username = document.getElementById('githubUsername').value;
+            
+            if (token && username) {
+                // In a real app, you would validate the token with GitHub API
+                loadRepositories();
+                githubModal.style.display = 'none';
+                
+                // Switch to repositories tab
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                document.querySelector('.tab[data-tab="repositories"]').classList.add('active');
+                document.getElementById('repositories-tab').classList.add('active');
+            } else {
+                alert('Please enter both token and username');
+            }
+        });
+
+        // Load repositories
+        function loadRepositories() {
+            repositoriesList.innerHTML = '';
+            
+            sampleRepositories.forEach(repo => {
+                const repoCard = document.createElement('div');
+                repoCard.className = 'repo-card';
+                repoCard.innerHTML = `
+                    <div class="repo-header">
+                        <div>
+                            <div class="repo-name">${repo.name}</div>
+                            <div class="repo-description">${repo.description}</div>
+                            <div class="repo-meta">
+                                <span><i class="fas fa-code"></i> ${repo.language}</span>
+                                <span><i class="fas fa-star"></i> ${repo.stars}</span>
+                                <span><i class="fas fa-code-branch"></i> ${repo.forks}</span>
+                                <span>Updated ${formatDate(repo.lastUpdated)}</span>
+                            </div>
+                        </div>
+                        <div class="repo-actions">
+                            <button class="btn btn-outline deploy-repo-btn" data-repo-id="${repo.id}">Deploy</button>
+                        </div>
+                    </div>
+                    <div class="branch-selector">
+                        ${repo.branches.map(branch => 
+                            `<button class="branch-btn ${branch === repo.defaultBranch ? 'active' : ''}" data-branch="${branch}">${branch}</button>`
+                        ).join('')}
+                    </div>
+                `;
+                repositoriesList.appendChild(repoCard);
+            });
+
+            // Add event listeners to deploy buttons
+            document.querySelectorAll('.deploy-repo-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const repoId = e.target.getAttribute('data-repo-id');
+                    openDeployModal(repoId);
+                });
+            });
+        }
+
+        // Load deployments
+        function loadDeployments() {
+            deploymentsList.innerHTML = '';
+            
+            sampleDeployments.forEach(deployment => {
+                const deploymentItem = document.createElement('div');
+                deploymentItem.className = 'deployment-item';
+                
+                let statusClass = 'status-success';
+                if (deployment.status === 'failed') statusClass = 'status-danger';
+                else if (deployment.status === 'pending') statusClass = 'status-pending';
+                
+                deploymentItem.innerHTML = `
+                    <div class="deployment-info">
+                        <h4>${deployment.repo} - ${deployment.environment === 'preview' ? 'Preview' : 'Production'} Deployment #${deployment.id}</h4>
+                        <div class="deployment-meta">
+                            <span>Commit: ${deployment.commit}</span>
+                            <span>Branch: ${deployment.branch}</span>
+                            <span>Deployed: ${formatDate(deployment.createdAt)}</span>
+                            ${deployment.environment === 'preview' ? '<a href="#" class="preview-url">Preview URL</a>' : ''}
+                        </div>
+                    </div>
+                    <div class="status ${statusClass}">${deployment.status === 'success' ? 'Live' : deployment.status}</div>
+                `;
+                deploymentsList.appendChild(deploymentItem);
+            });
+        }
+
+        // Open deploy modal
+        function openDeployModal(repoId) {
+            currentRepo = sampleRepositories.find(r => r.id == repoId);
+            
+            deployRepoInfo.innerHTML = `
+                <div class="repo-name">${currentRepo.name}</div>
+                <div class="repo-description">${currentRepo.description}</div>
+            `;
+            
+            const branchSelect = document.getElementById('deployBranch');
+            branchSelect.innerHTML = '';
+            currentRepo.branches.forEach(branch => {
+                const option = document.createElement('option');
+                option.value = branch;
+                option.textContent = branch;
+                if (branch === currentRepo.defaultBranch) option.selected = true;
+                branchSelect.appendChild(option);
+            });
+            
+            deployModal.style.display = 'flex';
+        }
+
+        // Start deployment
+        document.getElementById('startDeployBtn').addEventListener('click', () => {
+            const branch = document.getElementById('deployBranch').value;
+            const environment = document.getElementById('deployEnvironment').value;
+            
+            deployModal.style.display = 'none';
+            simulateDeployment(currentRepo, branch, environment);
+        });
+
+        // Simulate deployment process
+        function simulateDeployment(repo, branch, environment) {
+            const logs = document.getElementById('deploymentLogs');
+            logs.innerHTML = '';
+            
+            // Switch to deployments tab
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelector('.tab[data-tab="deployments"]').classList.add('active');
+            document.getElementById('deployments-tab').classList.add('active');
+            
+            const messages = [
+                { time: '12:10:15', type: 'info', text: `Starting deployment for ${repo.name} (${branch}) to ${environment}` },
+                { time: '12:10:16', type: 'info', text: 'Cloning repository from GitHub' },
+                { time: '12:10:18', type: 'success', text: 'Repository cloned successfully' },
+                { time: '12:10:19', type: 'info', text: 'Installing dependencies' },
+                { time: '12:10:25', type: 'success', text: 'Dependencies installed' },
+                { time: '12:10:26', type: 'info', text: 'Building application' },
+                { time: '12:10:31', type: 'success', text: 'Application built' },
+                { time: '12:10:32', type: 'info', text: 'Running tests' },
+                { time: '12:10:35', type: 'success', text: 'All tests passed' },
+                { time: '12:10:36', type: 'info', text: 'Creating container image' },
+                { time: '12:10:40', type: 'success', text: 'Container image created' },
+                { time: '12:10:41', type: 'info', text: 'Deploying to cluster' },
+                { time: '12:10:45', type: 'success', text: 'Deployment completed' },
+                { time: '12:10:46', type: 'info', text: 'Starting health checks' },
+                { time: '12:10:49', type: 'success', text: 'Health checks passed' },
+                { time: '12:10:50', type: 'success', text: `Deployment to ${environment} successful!` },
+            ];
+            
+            // For preview deployments, add PR info
+            if (environment === 'preview') {
+                messages.splice(1, 0, { time: '12:10:15', type: 'info', text: 'Creating preview environment for Pull Request #124' });
+                messages.push({ time: '12:10:51', type: 'info', text: 'Preview URL: https://pr-124-myapp-xyz789.deployhub.app' });
+            }
+            
+            let delay = 0;
+            messages.forEach(message => {
+                setTimeout(() => {
+                    const logEntry = document.createElement('div');
+                    logEntry.className = 'log-entry';
+                    
+                    const timeSpan = document.createElement('span');
+                    timeSpan.className = 'log-time';
+                    timeSpan.textContent = `[${message.time}]`;
+                    
+                    const typeSpan = document.createElement('span');
+                    typeSpan.className = `log-${message.type}`;
+                    typeSpan.textContent = message.type.toUpperCase() + ':';
+                    
+                    const textSpan = document.createElement('span');
+                    textSpan.textContent = ` ${message.text}`;
+                    
+                    logEntry.appendChild(timeSpan);
+                    logEntry.appendChild(typeSpan);
+                    logEntry.appendChild(textSpan);
+                    
+                    logs.appendChild(logEntry);
+                    logs.scrollTop = logs.scrollHeight;
+                    
+                    // After deployment, sometimes show rollback alert
+                    if (message.text.includes('successful!') && Math.random() > 0.5 && environment === 'production') {
+                        setTimeout(() => {
+                            // Simulate high CPU usage after deployment
+                            cpuUsageData = [32, 45, 58, 72, 85, 89];
+                            initializeCpuChart();
+                            document.getElementById('rollbackAlert').style.display = 'block';
+                        }, 2000);
+                    }
+                }, delay);
+                
+                delay += 800;
+            });
+            
+            // Add the deployment to the list
+            const newDeployment = {
+                id: sampleDeployments.length + 1,
+                repo: repo.name,
+                branch: branch,
+                commit: generateCommitHash(),
+                status: 'success',
+                environment: environment,
+                url: environment === 'preview' 
+                    ? 'https://pr-124-myapp-xyz789.deployhub.app'
+                    : 'https://myapp-abc123.deployhub.app',
+                createdAt: new Date().toISOString(),
+                duration: Math.floor(delay / 1000)
+            };
+            
+            sampleDeployments.unshift(newDeployment);
+            loadDeployments();
+        }
+
+        // Rollback functionality
+        document.getElementById('confirmRollback').addEventListener('click', () => {
+            alert('Rollback confirmed! Reverting to previous stable version...');
+            document.getElementById('rollbackAlert').style.display = 'none';
+            
+            // Reset CPU usage to normal after rollback
+            cpuUsageData = [32, 30, 28, 25, 22, 20];
+            initializeCpuChart();
+            
+            // Add rollback log
+            const logs = document.getElementById('deploymentLogs');
+            const logEntry = document.createElement('div');
+            logEntry.className = 'log-entry';
+            
+            const timeSpan = document.createElement('span');
+            timeSpan.className = 'log-time';
+            timeSpan.textContent = '[12:11:05]';
+            
+            const typeSpan = document.createElement('span');
+            typeSpan.className = 'log-warning';
+            typeSpan.textContent = 'ROLLBACK:';
+            
+            const textSpan = document.createElement('span');
+            textSpan.textContent = ' Initiating rollback to previous version due to performance degradation';
+            
+            logEntry.appendChild(timeSpan);
+            logEntry.appendChild(typeSpan);
+            logEntry.appendChild(textSpan);
+            
+            logs.appendChild(logEntry);
+            logs.scrollTop = logs.scrollHeight;
+        });
+
+        document.getElementById('dismissRollback').addEventListener('click', () => {
+            document.getElementById('rollbackAlert').style.display = 'none';
+        });
+
+        // Helper functions
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString() + ' at ' + date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        }
+
+        function generateCommitHash() {
+            return Math.random().toString(16).substring(2, 10);
+        }
+
+        // Initialize the page
+        loadDeployments();
+        initializeCpuChart();
+        
+        // Start CPU monitoring simulation
+        setInterval(simulateCpuUsage, 5000);
+    </script>
+</body>
+</html>
